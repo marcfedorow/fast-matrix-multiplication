@@ -20,17 +20,17 @@ __matrix_elem_type** cubic_mul_t(__matrix_elem_type** A, __matrix_elem_type** BT
 	return C;
 }
 
-#define c2da(n)										\
+#define c2da(n)						\
 matrices[n] = new __matrix_elem_type * [size]();	\
-matrices[n][0] = new __matrix_elem_type[size_sqr]();\
-{													\
-	register auto * const m_n = matrices[n];		\
-	register auto const zero = m_n[0];				\
-	register size_t sh  = size;						\
-	for (size_t i = 1; i < size; ++i) {				\
-		m_n[i] = zero + sh;							\
-		sh += size;									\
-	}												\
+matrices[n][0] = new __matrix_elem_type[size_sqr]();	\
+{							\
+	register auto * const m_n = matrices[n];	\
+	register auto const zero = m_n[0];		\
+	register size_t sh  = size;			\
+	for (size_t i = 1; i < size; ++i) {		\
+		m_n[i] = zero + sh;			\
+		sh += size;				\
+	}						\
 }
 
 #define a1 l[i]
@@ -42,47 +42,47 @@ matrices[n][0] = new __matrix_elem_type[size_sqr]();\
 #define b3 r[i + size]
 #define b4 r[i + size] + size
 
-#define create(n, l, sign, r)						\
-c2da(n);											\
-for (size_t i = 0; i < size; ++i) {					\
-	register auto * const m = matrices[n][i];		\
-	register auto const * const la = l;				\
-	register auto const * const ra = r;				\
-	for (size_t j = 0; j < size; ++j) {				\
-		m[j] = la[j] sign ra[j];					\
-	}												\
+#define create(n, l, sign, r)				\
+c2da(n);						\
+for (size_t i = 0; i < size; ++i) {			\
+	register auto * const m = matrices[n][i];	\
+	register auto const * const la = l;		\
+	register auto const * const ra = r;		\
+	for (size_t j = 0; j < size; ++j) {		\
+		m[j] = la[j] sign ra[j];		\
+	}						\
 }
-#define create_t(n, l, sign, r)						\
-c2da(n);											\
-for (size_t i = 0; i < size; ++i) {					\
-	register auto * m	= &matrices[n][0][i];		\
-	register auto const * const la = l;				\
-	register auto const * const ra = r;				\
-	for (size_t j = 0; j < size; ++j) {				\
-		*m = la[j] sign ra[j]; m += size;			\
-	}												\
+#define create_t(n, l, sign, r)				\
+c2da(n);						\
+for (size_t i = 0; i < size; ++i) {			\
+	register auto * m = &matrices[n][0][i];		\
+	register auto const * const la = l;		\
+	register auto const * const ra = r;		\
+	for (size_t j = 0; j < size; ++j) {		\
+		*m = la[j] sign ra[j]; m += size;	\
+	}						\
 }
-#define copy_shrink(n, f)							\
-c2da(n);											\
-for (size_t i = 0; i < size; ++i) {					\
-	register auto * const m = matrices[n][i];		\
-	register auto const * const ma = f;				\
-	for (size_t j = 0; j < size; ++j) {				\
-		m[j] = ma[j];								\
-	}												\
+#define copy_shrink(n, f)				\
+c2da(n);						\
+for (size_t i = 0; i < size; ++i) {			\
+	register auto * const m = matrices[n][i];	\
+	register auto const * const ma = f;		\
+	for (size_t j = 0; j < size; ++j) {		\
+		m[j] = ma[j];				\
+	}						\
 }
-#define copy_shrink_t(n, f)							\
-c2da(n);											\
-for (size_t i = 0; i < size; ++i) {					\
-	register auto * m = &matrices[n][0][i];			\
-	register auto const * const ma = f;				\
-	for (size_t j = 0; j < size; ++j) {				\
-		*m = ma[j]; m += size;						\
-	}												\
+#define copy_shrink_t(n, f)				\
+c2da(n);						\
+for (size_t i = 0; i < size; ++i) {			\
+	register auto * m = &matrices[n][0][i];		\
+	register auto const * const ma = f;		\
+	for (size_t j = 0; j < size; ++j) {		\
+		*m = ma[j]; m += size;			\
+	}						\
 }
 
 
-size_t const lim = 1 << 9;
+size_t const lim = 1 << 6;
 const bool last_step_transpond = true;
 //set false and change line 94 when cubic_mul_GPU done well & is more exxicient
 #include <future>
